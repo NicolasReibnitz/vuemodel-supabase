@@ -1,4 +1,4 @@
-import { ApiError, PostgrestError } from '@supabase/supabase-js'
+import { AuthError, PostgrestError } from '@supabase/supabase-js'
 import { useModelApi } from './useModelApi'
 import { ref, computed, watch, Ref, ComputedRef } from 'vue-demi'
 import { InstanceOf, Item } from '@vuex-orm/core'
@@ -16,7 +16,7 @@ export interface UseModelReturn<M extends typeof Model> {
   form: Partial<any>
   resetForm: () => void
   id: Ref<string | number | null>
-  error: Ref<ApiError | PostgrestError | StandardError | null>
+  error: Ref<AuthError | PostgrestError | StandardError | null>
   creating: Ref<boolean>
   finding: Ref<boolean>
   updating: Ref<boolean>
@@ -29,9 +29,9 @@ const ignoreOnUpdateFields = [
 ]
 
 export function useModel<M extends typeof Model>(
-  ModelClass: M
+  ModelClass: M, userID: string | null
 ): UseModelReturn<M> {
-  const modelApi = useModelApi<M>(ModelClass)
+  const modelApi = useModelApi<M>(ModelClass, userID)
 
   const id = ref()
 

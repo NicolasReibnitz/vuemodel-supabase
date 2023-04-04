@@ -1,8 +1,8 @@
-import { ApiError, PostgrestError } from '@supabase/supabase-js'
+import { AuthError, PostgrestError } from '@supabase/supabase-js'
 import { StandardError, useApi } from './useApi'
 import { InstanceOf, Item, Model } from '@vuex-orm/core'
 import { Ref } from 'vue-demi'
-import { useClient } from './useClient'
+// import { useClient } from './useClient'
 import QueryBuilder from '../query/QueryBuilder'
 
 export interface UseModelApiReturn<M extends typeof Model> {
@@ -13,7 +13,7 @@ export interface UseModelApiReturn<M extends typeof Model> {
   index: () => Promise<void>
   query: QueryBuilder
   data: Ref<Item<InstanceOf<M>>>
-  error: Ref<ApiError | PostgrestError | StandardError | null>
+  error: Ref<AuthError | PostgrestError | StandardError | null>
   userId: Ref<string | number | null>
   indexing: Ref<boolean>
   creating: Ref<boolean>
@@ -24,10 +24,11 @@ export interface UseModelApiReturn<M extends typeof Model> {
 }
 
 export function useModelApi<M extends typeof Model> (
-  ModelClass: typeof Model
+  ModelClass: typeof Model, userID: string | null
 ): UseModelApiReturn<M> {
-  const supabase = useClient()
-  const apiService = useApi<Item<InstanceOf<M>>>(ModelClass.entity, supabase.auth.user()?.id)
+  // const supabase = useClient()
+  // const userID = await supabase.auth.getUser().then(({data}) => data?.user?.id);
+  const apiService = useApi<Item<InstanceOf<M>>>(ModelClass.entity, userID)
 
   async function create (form = {}) {
     await apiService.create(form)

@@ -2,7 +2,7 @@ import { useModelApi } from './useModelApi'
 import { ref, computed, Ref, ComputedRef } from 'vue-demi'
 import { Collection, InstanceOf } from '@vuex-orm/core'
 import { Model } from '../types'
-import { ApiError, PostgrestError } from '@supabase/supabase-js'
+import { AuthError, PostgrestError } from '@supabase/supabase-js'
 import { StandardError } from './useApi'
 import QueryBuilder from '../query/QueryBuilder'
 
@@ -11,14 +11,14 @@ export interface UseModelCollectionReturn<M extends typeof Model> {
   ids: Ref<string[] | number[]>
   collection: ComputedRef<Collection<InstanceOf<M>>>
   query: QueryBuilder
-  error: Ref<ApiError | PostgrestError | StandardError | null>
+  error: Ref<AuthError | PostgrestError | StandardError | null>
   indexing: Ref<boolean>
 }
 
 export function useModelCollection<M extends typeof Model> (
-  ModelClass: M
+  ModelClass: M, userID: string | null
 ): UseModelCollectionReturn<M> {
-  const modelApi = useModelApi(ModelClass)
+  const modelApi = useModelApi<M>(ModelClass, userID)
   const ids = ref()
 
   const collection = computed<Collection<InstanceOf<M>>>(() => {

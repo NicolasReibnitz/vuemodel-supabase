@@ -1,24 +1,54 @@
+# About fork
+
+Updated to work with @supabase/supabase-js ^2.13.1.
+
+## Breaking changes
+
+#### Changes to the API
+
+`useModel`, `useModelCollection` and `useModelAPI` now require the user ID to be passed in as the second argument. This is because the synchronous `supabase.auth.user()` is no longer available in the new version of the Supabase client. The new `supabase.auth.getUser()` is asynchronous, so the user ID must be passed in manually for this to work well with the Vue composition API and `<script setup />`.
+
+Here is an example of how to use this with [VueAuth](https://www.vueauth.com/):
+
+```js
+import { useAuthState } from '@vueauth/core';
+import { useModel, useModelCollection, useModelAPI } from '@vuemodel/supabase/src/main';
+
+const authState = useAuthState();
+const userID = authState?.user?.value?.id;
+
+const service = useModel(model, userID);
+const serviceCollection = useModelCollection(model, userID);
+const serviceAPI = useModelAPI(model, userID);
+```
+
+#### Other internal changes
+
+-   `ApiError` was renamed to `AuthError`
+
 # A Quick Note...
-Currently, this package is a bit of an experiment!
-If you'd like to use these concepts in production that's okay, yet I'd recommend forking this repo and making it your own. At least until these concepts standardize.
+
+Currently, this package is a bit of an experiment! If you'd like to use these concepts in production that's okay, yet I'd recommend forking this repo and making it your own. At least until these concepts standardize.
 
 Enough preamble. Let's dive in! 🤿
 
 ## Installation
+
 ```js
-import { SupabasePlugin } from '@vuemodel/supabase'
+import { SupabasePlugin } from '@vuemodel/supabase';
 
 Vue.install(SupabasePlugin, {
-  credentials: {
-    supabaseUrl: 'your-supabase-url',
-    supabaseKey: 'your-supabase-key'
-  }
-})
+	credentials: {
+		supabaseUrl: 'your-supabase-url',
+		supabaseKey: 'your-supabase-key'
+	}
+});
 ```
 
 ## Usage
 
 ### useModel
+
 ```js
 import { useModel } from '@vuemodel/supabase'
 
@@ -94,73 +124,76 @@ todoService.loading.value
 ```
 
 ### useModelCollection
-useModelCollection hasn't been fleshed out yet!
-More to come :)
+
+useModelCollection hasn't been fleshed out yet! More to come :)
+
 ```js
-import { useModelCollection } from '@vuemodel/supabase'
+import { useModelCollection } from '@vuemodel/supabase';
 
 export default class Todo extends Model {
-  static entity = 'todos'
+	static entity = 'todos';
 
-  static fields () {
-    return {
-      id: this.uid(),
-      title: this.string(''),
-      done: this.boolean(false),
-    }
-  }
+	static fields() {
+		return {
+			id: this.uid(),
+			title: this.string(''),
+			done: this.boolean(false)
+		};
+	}
 }
 
-const todoCollectionService = useModel(Todo)
+const todoCollectionService = useModel(Todo);
 
 /**
  * 🤿 Let's go get some models from the backend!
  */
-todoCollectionService.index()
+todoCollectionService.index();
 
 /**
  * 🤿 Filter models by ids
  */
-todoCollectionService.ids.value = [1,3,5]
+todoCollectionService.ids.value = [1, 3, 5];
 
 /**
  * 🤿 Of course, you'll want access to the collection...
  */
-todoCollectionService.collection.value
+todoCollectionService.collection.value;
 
 /**
  * 🤿 Want to add in a loading spinner?
  */
-todoCollectionService.indexing.value
+todoCollectionService.indexing.value;
 
 /**
  * 🤿 And finally, let's take a look at error handling
  */
-await todoCollectionService.index()
-console.log(todoCollectionService.error.value)
+await todoCollectionService.index();
+console.log(todoCollectionService.error.value);
 ```
 
 ## Destructuring
+
 Note that in the real world, you'll probably want to use destructuring. For example:
 
 ```vue
 <script setup>
-const { form, create, creating, error } = useModel(Todo)
+	const { form, create, creating, error } = useModel(Todo);
 </script>
 
 <template>
-<input v-model="form.title">
+	<input v-model="form.title" />
 
-<button :disabled="creating" @click="create">create</button>
+	<button :disabled="creating" @click="create">create</button>
 
-<span v-if="creating">creating...</span>
-<span v-if="error">{{ error.message }}</span>
+	<span v-if="creating">creating...</span>
+	<span v-if="error">{{ error.message }}</span>
 </template>
 ```
 
 ## Coming Soon!
+
 I'll likely add:
-- Scoping
-- Filtering
-- Batch operations
-As the Supabase API makes this possible! So stay tuned for that 😄
+
+-   Scoping
+-   Filtering
+-   Batch operations As the Supabase API makes this possible! So stay tuned for that 😄
