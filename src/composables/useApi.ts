@@ -98,6 +98,7 @@ export function useApi<ResponseShape> (
     const { data: responseData, error: err } = await supabase
       .from(entity)
       .insert([form])
+      .select()
 
     loading.value = false
     creating.value = false
