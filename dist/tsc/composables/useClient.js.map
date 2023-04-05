@@ -1,0 +1,1 @@
+{"version":3,"file":"useClient.js","sourceRoot":"","sources":["../../../src/composables/useClient.ts"],"names":[],"mappings":";;;AACA,uCAAiC;AACjC,yEAAqE;AAE9D,MAAM,SAAS,GAAG,GAAmB,EAAE;IAC5C,MAAM,MAAM,GAAG,IAAA,iBAAM,EAAC,2CAAoB,CAAC,CAAA;IAC3C,IAAI,CAAC,MAAM,EAAE;QACX,MAAM,KAAK,CAAC,iCAAiC,CAAC,CAAA;KAC/C;IACD,OAAO,MAAM,CAAA;AACf,CAAC,CAAA;AANY,QAAA,SAAS,aAMrB"}

@@ -1,4 +1,4 @@
-import { SupabaseQueryBuilder } from '@supabase/supabase-js/dist/main/lib/SupabaseQueryBuilder'
+// import { SupabaseQueryBuilder } from '@supabase/supabase-js/dist/main/lib/SupabaseQueryBuilder'
 import buildSelect from './buildSelect'
 
 type Filters = '=' |
@@ -59,7 +59,8 @@ export default class QueryBuilder {
   #with: string[] = []
 
   async runWith (
-    queryBuilder: SupabaseQueryBuilder<Record<string, unknown>>
+    queryBuilder
+    // : SupabaseQueryBuilder<Record<string, unknown>>
   ) {
     // Select
     const filterBuilder = queryBuilder.select(buildSelect(this.#with))

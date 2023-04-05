@@ -1,4 +1,4 @@
-import { ApiError, PostgrestError } from '@supabase/supabase-js'
+import { AuthError, PostgrestError } from '@supabase/supabase-js'
 import { ref, Ref } from 'vue-demi'
 import QueryBuilder from '../query/QueryBuilder'
 import { useClient } from './useClient'
@@ -10,7 +10,7 @@ export interface UseApiReturn<ResponseShape> {
   find: (id: string | number) => Promise<void>
   update: (id: string | number, form: Partial<any>) => Promise<void>
   query: QueryBuilder
-  error: Ref<ApiError | PostgrestError | StandardError | null>
+  error: Ref<AuthError | PostgrestError | StandardError | null>
   data: Ref<ResponseShape>
   include: Ref<string[]>
   userId: Ref<string | number | null>
@@ -32,7 +32,7 @@ export function useApi<ResponseShape> (
 ): UseApiReturn<ResponseShape> {
   const supabase = useClient()
 
-  const error = ref<ApiError | PostgrestError | StandardError | null>(null)
+  const error = ref<AuthError | PostgrestError | StandardError | null>(null)
   const data = ref()
   const loading = ref(false)
   const userId = ref(defaultUserId)
@@ -159,6 +159,7 @@ export function useApi<ResponseShape> (
       .from(entity)
       .update(form)
       .match({ id })
+      .select()
 
     loading.value = false
     updating.value = false
@@ -180,6 +181,7 @@ export function useApi<ResponseShape> (
       .from(entity)
       .delete()
       .match({ id })
+      .select()
 
     loading.value = false
     removing.value = false
