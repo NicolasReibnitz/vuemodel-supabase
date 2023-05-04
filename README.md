@@ -1,6 +1,28 @@
 # About fork
 
-Updated to work with @supabase/supabase-js ^2.13.1.
+[NicolasReibnitz/vuemodel-supabase](https://github.com/NicolasReibnitz/vuemodel-supabase)
+
+I updated Luke's fine [@vuemodel/supabase](https://github.com/vuemodel/supabase) package to work with [@supabase/supabase-js](https://github.com/supabase/supabase-js) ^2.13.1.
+
+## Installation
+
+```bash
+# npm
+npm install 'git@github.com:NicolasReibnitz/vuemodel-supabase.git'
+
+# or yarn
+yarn add 'git@github.com:NicolasReibnitz/vuemodel-supabase.git'
+```
+
+Import it just like the original package as `@vuemodel/supabase`.
+
+Or even better, use the [Quasar App Extension @vuemodel/supabase](https://github.com/vuemodel/quasar-app-extension-supabase).
+
+## Important
+
+You will also need the fork of Luke's [@vueauth/supabase](https://github.com/vueauth/vueauth) package for supabase v2.
+
+You can find that here: [NicolasReibnitz/vueauth](https://github.com/NicolasReibnitz/vueauth/tree/main/supabase).
 
 ## Breaking changes
 
@@ -25,6 +47,12 @@ const serviceAPI = useModelAPI(model, userID);
 #### Other internal changes
 
 -   `ApiError` was renamed to `AuthError`
+
+#### Cheers!
+
+Nicolas
+
+---
 
 # A Quick Note...
 
