@@ -32,7 +32,9 @@ class QueryBuilder {
         _QueryBuilder_range.set(this, null);
         _QueryBuilder_with.set(this, []);
     }
-    runWith(queryBuilder
+    runWith(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryBuilder
     // : SupabaseQueryBuilder<Record<string, unknown>>
     ) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -46,7 +48,12 @@ class QueryBuilder {
                 const operator = (filter[2] ? filter[1] : '=');
                 const options = (_b = filter[3]) !== null && _b !== void 0 ? _b : {};
                 const supabaseFilter = supabaseFilterMethodsMap[operator];
+                if (supabaseFilter === 'eq')
+                    filterBuilder.eq(field, value);
                 switch (supabaseFilter) {
+                    case 'eq':
+                        filterBuilder.eq(field, value);
+                        break;
                     case '=':
                         filterBuilder.eq(field, value);
                         break;

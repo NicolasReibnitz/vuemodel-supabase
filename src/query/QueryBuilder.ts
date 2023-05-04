@@ -22,7 +22,7 @@ type Filters = '=' |
 
 type TextSearchOptions = { config?: string; type?: 'plain' | 'phrase' | 'websearch' | null }
 
-type FilterParamsTuple = [string, string, unknown, TextSearchOptions | null]
+type FilterParamsTuple = [string|number, string|number, unknown, TextSearchOptions | null]
 
 const supabaseFilterMethodsMap: Record<Filters, string> = {
   '=': 'eq',
@@ -59,7 +59,8 @@ export default class QueryBuilder {
   #with: string[] = []
 
   async runWith (
-    queryBuilder
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryBuilder: any
     // : SupabaseQueryBuilder<Record<string, unknown>>
   ) {
     // Select
@@ -74,7 +75,10 @@ export default class QueryBuilder {
 
       const supabaseFilter = supabaseFilterMethodsMap[operator]
 
+      if (supabaseFilter === 'eq') filterBuilder.eq(field, value);
+
       switch (supabaseFilter) {
+        case 'eq': filterBuilder.eq(field, value); break;
         case '=': filterBuilder.eq(field, value); break;
         case '!=': filterBuilder.neq(field, value); break;
         case '>': filterBuilder.gt(field, value); break;
@@ -183,7 +187,7 @@ export default class QueryBuilder {
     return filterBuilder
   }
 
-  where (field: string, secondParam: Filters | string, thirdParam: unknown = null, options: TextSearchOptions | null = null) {
+  where (field: string|number, secondParam: Filters | string|number, thirdParam: unknown = null, options: TextSearchOptions | null = null) {
     this.#filters.push([field, secondParam, thirdParam, options])
 
     return this

@@ -6,7 +6,7 @@ declare type TextSearchOptions = {
 export default class QueryBuilder {
     #private;
     runWith(queryBuilder: any): Promise<any>;
-    where(field: string, secondParam: Filters | string, thirdParam?: unknown, options?: TextSearchOptions | null): this;
+    where(field: string | number, secondParam: Filters | string | number, thirdParam?: unknown, options?: TextSearchOptions | null): this;
     limit(limit: number): this;
     orderBy(field: never, direction: string | undefined, foreignTable: string | undefined): this;
     range(from: number, to: number): this;
