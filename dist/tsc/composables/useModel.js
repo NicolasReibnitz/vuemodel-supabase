@@ -4,9 +4,7 @@ exports.useModel = void 0;
 const tslib_1 = require("tslib");
 const useModelApi_1 = require("./useModelApi");
 const vue_demi_1 = require("vue-demi");
-const ignoreOnUpdateFields = [
-    'id', 'created_at'
-];
+const ignoreOnUpdateFields = ['id', 'created_at'];
 function useModel(ModelClass, userID) {
     const modelApi = (0, useModelApi_1.useModelApi)(ModelClass, userID);
     const id = (0, vue_demi_1.ref)();
@@ -15,8 +13,7 @@ function useModel(ModelClass, userID) {
     });
     function getUpdateableFieldKeys() {
         const fields = ModelClass.getFields();
-        return Object.keys(fields)
-            .filter(field => {
+        return Object.keys(fields).filter(field => {
             return !ignoreOnUpdateFields.includes(field);
         });
     }

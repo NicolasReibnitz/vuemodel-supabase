@@ -11,7 +11,7 @@ function dotRelationStringArrayToArray(dotRelations) {
 }
 function relationsArrayToObject(relationsArray) {
     const result = [];
-    relationsArray.forEach((relations) => {
+    relationsArray.forEach(relations => {
         const nest = {};
         nest[relations[0]] = {};
         let path = relations[0];
@@ -38,7 +38,7 @@ function buildSelectFromRelationsObject(relationsObject) {
         if (key) {
             result += ')';
         }
-        if (Object.keys(parentChildren).length > 1 && (siblingNumber + 1) < Object.keys(parentChildren).length) {
+        if (Object.keys(parentChildren).length > 1 && siblingNumber + 1 < Object.keys(parentChildren).length) {
             result += ',';
         }
     }

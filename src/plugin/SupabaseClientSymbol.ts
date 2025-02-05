@@ -1,8 +1,6 @@
-import { SupabaseClient } from '@supabase/supabase-js'
-import { InjectionKey } from 'vue-demi'
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { InjectionKey } from 'vue-demi';
 
-const SupabaseClientSymbol: InjectionKey<SupabaseClient> = Symbol('SupabaseDefaultClient')
+const SupabaseClientSymbol: InjectionKey<SupabaseClient> = Symbol('SupabaseDefaultClient');
 
-export {
-  SupabaseClientSymbol,
-}
+export { SupabaseClientSymbol };

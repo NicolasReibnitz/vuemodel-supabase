@@ -32,8 +32,7 @@ function useApi(entity, defaultUserId = null) {
             error.value = null;
             loading.value = true;
             indexing.value = true;
-            const supabaseQueryBuilder = supabase
-                .from(entity);
+            const supabaseQueryBuilder = supabase.from(entity);
             const query = builder.runWith(supabaseQueryBuilder);
             const { data: responseData, error: err } = yield query;
             resetBuilder();
@@ -56,10 +55,7 @@ function useApi(entity, defaultUserId = null) {
             }
             loading.value = true;
             creating.value = true;
-            const { data: responseData, error: err } = yield supabase
-                .from(entity)
-                .insert([form])
-                .select();
+            const { data: responseData, error: err } = yield supabase.from(entity).insert([form]).select();
             loading.value = false;
             creating.value = false;
             if (err) {
@@ -78,8 +74,7 @@ function useApi(entity, defaultUserId = null) {
             if (typeof id === 'number') {
                 id = id.toString();
             }
-            const supabaseQueryBuilder = supabase
-                .from(entity);
+            const supabaseQueryBuilder = supabase.from(entity);
             builder.where('id', id);
             const query = builder.runWith(supabaseQueryBuilder);
             const { data: responseData, error: err } = yield query;
@@ -105,11 +100,7 @@ function useApi(entity, defaultUserId = null) {
             }
             loading.value = true;
             updating.value = true;
-            const { data: responseData, error: err } = yield supabase
-                .from(entity)
-                .update(form)
-                .match({ id })
-                .select();
+            const { data: responseData, error: err } = yield supabase.from(entity).update(form).match({ id }).select();
             loading.value = false;
             updating.value = false;
             if (err) {
@@ -125,11 +116,7 @@ function useApi(entity, defaultUserId = null) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             loading.value = true;
             removing.value = true;
-            const { data: responseData, error: err } = yield supabase
-                .from(entity)
-                .delete()
-                .match({ id })
-                .select();
+            const { data: responseData, error: err } = yield supabase.from(entity).delete().match({ id }).select();
             loading.value = false;
             removing.value = false;
             if (err) {

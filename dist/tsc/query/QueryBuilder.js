@@ -103,7 +103,8 @@ class QueryBuilder {
                         break;
                     case 'contains':
                         () => {
-                            if ((!Array.isArray(value) && typeof value !== 'string' && typeof value !== 'object') || value === null) {
+                            if ((!Array.isArray(value) && typeof value !== 'string' && typeof value !== 'object') ||
+                                value === null) {
                                 throw new Error(`'contains' filter must be an array, string or object. '${typeof value}' given.`);
                             }
                             filterBuilder.contains(field, value);
@@ -111,7 +112,8 @@ class QueryBuilder {
                         break;
                     case 'containedBy':
                         () => {
-                            if ((!Array.isArray(value) && typeof value !== 'string' && typeof value !== 'object') || value === null) {
+                            if ((!Array.isArray(value) && typeof value !== 'string' && typeof value !== 'object') ||
+                                value === null) {
                                 throw new Error(`'containedBy' filter must be an array, string or object. '${typeof value}' given.`);
                             }
                             filterBuilder.containedBy(field, value);
@@ -173,7 +175,8 @@ class QueryBuilder {
                             filterBuilder.textSearch(field, value, options);
                         };
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
                 // if (config) {
                 //   const func = filterBuilder[supabaseFilter] as (field: string, value: unknown, config: OrderOptions)

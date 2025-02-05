@@ -1,6 +1,6 @@
-import { Model as VuexOrmModel } from '@vuex-orm/core'
+import { Model as VuexOrmModel } from '@vuex-orm/core';
 
 export class Model extends VuexOrmModel {
-  [k: string]: any;
-  id: string | number | undefined
+	[k: string]: any;
+	id: string | number | undefined;
 }
